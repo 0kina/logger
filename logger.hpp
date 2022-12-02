@@ -3,6 +3,11 @@
 namespace okina_logger {
 
 template <class T>
+void print_variable(std::string label, T var) {
+  std::cerr << label << ": " << var << std::endl;
+}
+
+template <class T>
 void print_container(std::string label, const T &container, std::string delimiter=", ") {
   std::cerr << label << std::endl;
   int s = container.size();
