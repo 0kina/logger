@@ -1,26 +1,50 @@
 #include <iostream>
+#include <set>
+#include <vector>
 
 namespace okina_logger {
 
 template <class T>
-void print_variable(std::string label, T var) {
+void print_var_inner(std::string label, T var) {
   std::cerr << label << ": " << var << std::endl;
 }
 
+void print_log(std::string label, int var) {
+  print_var_inner(label, var);
+}
+
+void print_log(std::string label, std::string var) {
+  print_var_inner(label, var);
+}
+
 template <class T>
-void print_container(std::string label, const T &container, std::string delimiter=", ") {
-  std::cerr << label << std::endl;
-  int s = container.size();
-  auto itr = begin(container);
-  for (int i = 0; i < s; ++i) {
-    std::cout << *itr;
-    ++itr;
-    if (i < s - 1) {
-      std::cout << delimiter;
+void print_vars_single_container_inner(std::string label, T vars, std::string delimiter) {
+  std::cerr << label << ": ";
+  int i = 0;
+  for (typename T::const_iterator itr = begin(vars); itr != end(vars); ++itr) {
+    std::cerr << *itr;
+    if (i++ < vars.size() - 1;) {
+      std::cerr << delimiter;
     } else {
-      std::cout << std::endl;
+      std::cerr << std::endl;
     }
   }
+}
+
+void print_log(std::string label, std::vector<int> vars, std::string delimiter=", ") {
+  print_vars_single_container_inner(label, vars, delimiter);
+}
+
+void print_log(std::string label, std::vector<std::string> vars, std::string delimiter=", ") {
+  print_vars_single_container_inner(label, vars, delimiter);
+}
+
+void print_log(std::string label, std::set<int> vars, std::string delimiter=", ") {
+  print_vars_single_container_inner(label, vars, delimiter);
+}
+
+void print_log(std::string label, std::set<std::string> vars, std::string delimiter=", ") {
+  print_vars_single_container_inner(label, vars, delimiter);
 }
 
 } // okina_logger
